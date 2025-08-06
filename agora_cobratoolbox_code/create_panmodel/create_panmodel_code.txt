@@ -1,0 +1,34 @@
+% --- Set up model and output paths ---
+% modPath: Path to the folder containing the strain models. [cite: 1]
+% Example: 'C:\Users\YourName\Documents\StrainModels'
+modPath = 'path_to_strain_model'; % [cite: 1]
+
+% panPath: Output path for the corresponding level pan-genome model. [cite: 1]
+% Example: 'C:\Users\YourName\Documents\PanModels'
+panPath = 'output_path_for_corresponding_level_model'; % [cite: 1]
+
+% --- Define the taxonomic level ---
+% taxonLevel: Specifies the taxonomic level at which to build the pan-genome model. [cite: 1]
+% In this case, it's set to 'Species'. [cite: 1]
+% Other possible options (depending on what the createPanModels function supports): 'Genus', 'Family', etc.
+taxonLevel = 'Species'; % [cite: 1]
+
+% --- Specify the taxonomic information file ---
+% taxTable: Path to the AGORA2 information file, which contains taxonomic information for the strains. [cite: 1]
+% This is typically an Excel file (.xlsx). [cite: 1]
+% Example: 'C:\Users\YourName\Downloads\AGORA2_infoFile.xlsx'
+taxTable = 'path_to_AGORA2_infoFile.xlsx'; % [cite: 1]
+
+% --- Call the function to create pan-genome models ---
+% createPanModels: This is the main function used to create the pan-genome models. [cite: 1]
+% Argument description:
+%   modPath:    Path containing the strain models. [cite: 1]
+%   panPath:    Path to save the output pan-genome models. [cite: 1]
+%   taxonLevel: The taxonomic level at which to build the models (e.g., 'Species', 'Genus'). [cite: 1]
+%   32:         The specific meaning of this parameter depends on the implementation of the createPanModels function. [cite: 1]
+%               It could typically represent:
+%                 - The number of CPU cores/threads to use.
+%                 - Some internal computational parameter or threshold.
+%               (You would need to consult the documentation for the createPanModels function to determine its exact meaning).
+%   taxTable:   Path to the data table containing taxonomic information. [cite: 1]
+createPanModels(modPath, panPath, taxonLevel, 32, taxTable); % [cite: 1]
