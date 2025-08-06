@@ -1,112 +1,118 @@
-# 🧠 Modulation of *Bacteroides fragilis*-Driven Bile Acid Metabolism in Stroke-Associated Enterotypes by *Eucommia ulmoides* Extract and *Limosilactobacillus reuteri* 🌿💊
+# 🧠 Targeting *Escherichia fergusonii* in Parkinson’s Disease via *Faecalibacterium prausnitzii*, *Lactiplantibacillus plantarum*, and Herba Patriniae 🌿🦠
 
-[![DOI](https://img.shields.io/badge/DOI-10.xxxx%2Fxxxx-blue.svg)](https://doi.org/10.xxxx/xxxx) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) <p align="center">
-  <img src="https://raw.githubusercontent.com/Benjamin-JHou/BioDeepNat/main/images/icon.png" alt="icon" width="120">
-</p>
 
-<h1 align="center">Modulation of *Bacteroides fragilis*-Driven Bile Acid Metabolism in Stroke-Associated Enterotypes by *Eucommia ulmoides* Extract and *Limosilactobacillus reuteri*</h1>
+<h1 align="center">Synergistic Modulation of Gut Dysbiosis in Parkinson’s Disease</h1>
 
 <p align="center">
-  <em>🔬 Exploring the association between specific gut enterotypes, bile acids, and ischemic stroke (IS), and evaluating the interventional effects of *Eucommia ulmoides* (EU) extract and *Limosilactobacillus reuteri* (*L. reuteri*).</em>
+  <em>Targeted suppression of <strong>E. fergusonii</strong> by a combination of traditional herbal extract and probiotics to restore 5-HTP and SCFA metabolism and alleviate gut-brain inflammation in Parkinson's disease.</em>
 </p>
 
 <p align="center">
-  <img src="https://github.com/WXG920713/Stroke-and-B.fragilis-EU/blob/main/graph%20abstract.png" alt="Graphical Abstract" width="800"> 
+  <img src="./Graph%20abstract.png" alt="Graphical Abstract" width="850">
 </p>
 
 ---
 
 ## 📜 Table of Contents
-
 - [Overview](#overview)
-- [Analysis Workflow](#analysis-workflow)
-  - [1. Personalized Metabolic Modeling (COBRA)](#1-personalized-metabolic-modeling-cobra)
-    - [📄 `create_panmodel_code.txt`](#create_panmodel_codetxt)
-    - [📄 `initMgPipe_code.txt`](#initmgpipe_codetxt)
-  - [2. Machine Learning Analysis (XGBoost-SHAP)](#2-machine-learning-analysis-xgboost-shap)
-    - [💻 `xgboost_shap.ipynb`](#xgboost_shapipynb)
-- [Data Availability](#data-availability)
-- [How to Cite](#how-to-cite)
+- [Project Structure](#project-structure)
+- [Analysis Pipeline](#analysis-pipeline)
+  - [1. Enterotype Classification](#1-enterotype-classification)
+  - [2. Personalized Metabolic Modeling (COBRA)](#2-personalized-metabolic-modeling-cobra)
+  - [3. Machine Learning with SHAP Interpretation](#3-machine-learning-with-shap-interpretation)
+- [Mechanistic Diagrams](#mechanistic-diagrams)
+- [Data & Code Access](#data--code-access)
+- [Citation](#citation)
 - [Acknowledgements](#acknowledgements)
 
 ---
 
-## 💡 Overview
+## Overview
 
-Gut microbiota dysbiosis influences the risk of ischemic stroke (IS)[cite: 2]. Diet and natural products can modulate the microbiota to prevent disease[cite: 3]. This study focuses on the association of specific enterotypes and bile acids with IS, and evaluates the interventional effects of *Eucommia ulmoides* (EU) extract and *Limosilactobacillus reuteri* (*L. reuteri*)[cite: 4]. Public metagenomic data from IS patients and healthy controls were used to classify the gut microbiota[cite: 5]. Constraint-based metabolic models (COBRA) were employed to predict microbial metabolic features[cite: 6]. Machine learning (XGBoost-SHAP) was utilized to identify key microbes and metabolites[cite: 7]. In vitro experiments and a PC12 and Caco-2 co-culture cell model were used to validate their effects on the gut-brain axis[cite: 8, 9].
+Parkinson’s disease (PD) is often accompanied by gut microbial dysbiosis. However, the role of distinct **enterotypes** in influencing PD risk remains underexplored. This project aimed to identify subtype-specific microbial signatures and metabolic pathways in PD, and explore targeted interventions.
 
-The Bacteroidaceae-dominant enterotype (ET-B) is associated with a higher risk of IS, while the Lachnospiraceae-dominant enterotype (ET-L) is associated with a lower IS risk[cite: 10]. ET-B, enriched with *B. fragilis*, increases the production of deoxycholic acid (DCA), thereby impairing brain and gut function[cite: 11]. The combined intervention of *L. reuteri* and EU extract, particularly the addition of EU, significantly inhibited *B. fragilis* growth and DCA production, improved intestinal barrier function by upregulating p-AMPKα and ZO-1, and demonstrated neuroprotective effects via the upregulation of p-AKT[cite: 12].
+Key Highlights:
+1. **Meta-analysis of 12 PD metagenomic datasets** (1,322 PD / 1,418 HC):  
+   - Identified high-risk enterotype **ET-B (Bacteroidaceae-enriched)**.  
+   - *E. fergusonii* identified as a key microbe associated with 5-HTP depletion and TMAO production.
 
----
+2. **Constraint-based modeling (COBRA)**:  
+   - Simulated microbial metabolic interactions using AGORA models.  
+   - Predicted suppression of *E. fergusonii* via *F. prausnitzii* butyrate production and TMA scavenging.
 
-## ⚙️ Analysis Workflow
-
-The analysis workflow and corresponding scripts used in this study are as follows:
-
-### 1. 🧬 Personalized Metabolic Modeling (COBRA)
-
-Personalized gut microbiota community metabolic models were constructed using the constraint-based metabolic modeling (COBRA) toolbox, integrating the assembly of gut organisms through reconstruction and analysis (AGORA)2 model and species-level relative abundance data[cite: 57].
-
-#### 📄 `create_panmodel_code.txt`
-
-This MATLAB script is used to **convert strain-level AGORA2 models to species-level pan-genome models**[cite: 58]. This is a key preprocessing step for personalized metabolic modeling.
-
-- **📖 Relevant Paper Section:** 2.3. Personalized metabolic modeling and flux analysis [cite: 57]
-- **▶️ Main Function:** Calls the `createPanModels` function[cite: 492, 500].
-- **➡️ Inputs:**
-    - `modPath`: Path to the folder containing strain models[cite: 485, 486].
-    - `taxTable`: Path to the AGORA2 information file containing taxonomic information for strains[cite: 490, 491].
-- **⬅️ Outputs:**
-    - `panPath`: Output path for the corresponding level pan-genome model[cite: 487].
-- **🛠️ Core Tools:** MATLAB, AGORA2 model data.
-
-#### 📄 `initMgPipe_code.txt`
-
-This MATLAB script is used to **construct personalized gut microbiota community metabolic models** and perform flux analysis[cite: 57, 513]. It integrates the species-level pan-models and species relative abundance data, considering dietary compositions[cite: 57, 59, 507, 508].
-
-- **📖 Relevant Paper Section:** 2.3. Personalized metabolic modeling and flux analysis [cite: 57]
-- **▶️ Main Function:** Calls the `initMgPipe` function[cite: 513, 530].
-- **➡️ Inputs:**
-    - `modPath`: Path to the species pan-models (generated by `create_panmodel_code.txt`)[cite: 505, 506, 516].
-    - `abunFilePath`: Path to the OTU table or similar abundance input file[cite: 501, 502, 503, 504, 517].
-    - `dietFilePath`: Path to the file containing diet constraints[cite: 507, 508, 519, 520].
-- **⬅️ Outputs:**
-    - `netSecretionFluxes`: Net secretion fluxes of metabolites by the community[cite: 524].
-    - `netUptakeFluxes`: Net uptake fluxes of metabolites by the community[cite: 525].
-    - And other model statistics and summary data[cite: 523, 526, 527, 528, 529].
-- **🛠️ Core Tools:** MATLAB, COBRA toolbox, AGORA2 model data, IBM CPLEX solver[cite: 62].
-- **📄 Paper Mention:** This script is also referenced in Section 2.5. "Metabolic Model Simulations of bile acid" for simulating metabolic capabilities and interactions of *B. fragilis* and *L. reuteri*, especially concerning bile acid metabolism[cite: 79, 84].
-
-### 2. 🤖 Machine Learning Analysis (XGBoost-SHAP)
-
-An XGBoost classifier was developed using species-level OTUs to differentiate between Ischemic Stroke (IS) and Healthy Control (HC) patients[cite: 63]. SHAP (SHapley Additive exPlanations) analysis was utilized to interpret feature contributions and identify important microbial predictive metabolites[cite: 71].
-
-#### 💻 `xgboost_shap.ipynb`
-
-This Jupyter Notebook contains the Python code for **building the XGBoost classifier and performing SHAP analysis**.
-
-- **📖 Relevant Paper Section:** 2.3. Extreme Gradient Boosting (XGBoost) Classifier Construction and SHapley Additive exPlanations (SHAP) Interpretation (Note: The paper text mentions this as section 2.3, but its content and placement suggest it might be 2.4 in a revised version, as it follows metabolic modeling).
-- **▶️ Main Functions:**
-    - Data preprocessing (filtering OTUs[cite: 65], Mann-Whitney U test [cite: 65]).
-    - XGBoost hyperparameter optimization using `RandomizedSearchCV`[cite: 66].
-    - Model training and 10-fold cross-validation[cite: 69].
-    - Model performance evaluation using Receiver Operating Characteristic (ROC) curves and Area Under the Curve (AUC) values[cite: 70].
-    - Application of SHAP analysis to identify important microbial species and predictive metabolites[cite: 71].
-- **🛠️ Core Tools:** Python, pandas, numpy, scikit-learn, XGBoost, SHAP.
-- **📄 Paper Mention:** This analysis was used to identify key gut microbial features in the ET-B and ET-L cohorts (Figures 3a,b and 4a,b) [cite: 175, 181] and key gut microbial metabolites (Supplementary Figures S1b,c)[cite: 173, 174]. The code is available in the GitHub repository[cite: 72].
-
+3. **Experimental validation**:  
+   - In vitro co-culture and PC12/Caco-2 assays showed that *F. prausnitzii* + *L. plantarum* combined with Herba Patriniae (HP) suppress *E. fergusonii*, restore butyrate/5-HTP, and reduce TMAO.  
+   - Activation of p-Akt (neuronal) and p-AMPKα/ZO-1 (intestinal barrier), along with reduced TNF-α/IL-6.
 
 ---
 
-## ✍️ How to Cite
+## Project Structure
+Parkinsons/
+├── mechanisms.jpeg # Mechanism illustration
+├── Graph abstract.png # Graphical abstract
+├── Website addresses of each data.xlsx
+├── Enterotype_data/
+│ ├── Enterotype_classification_code/
+│ └── ET-B / ET-L / ET-E
+├── agora_cobratoolbox_code/
+│ ├── create_panmodel_code.txt
+│ └── initMgPipe_code.txt
+└── xgboost_shap_code.ipynb
 
-If you use these codes or data in your research, please cite our paper:
+## Analysis Pipeline
 
-Wu, X., Zhang, T., Zhang, T., Jian, F., & Park, S. (Year). Modulation of *Bacteroides fragilis*-Driven Bile Acid Metabolism in Stroke-Associated Enterotypes by *Eucommia ulmoides* Extract and *Limosilactobacillus reuteri*. *Journal Name*, *Volume(Issue)*, Pages. 
-DOI: [Insert DOI Here](https://doi.org/XXXX)
+### 1. Enterotype Classification
+- **Script**: `Enterotype.R` (PAM clustering with Jensen–Shannon distance).
+- **Visualization**: `PCA.R`.
+- **Output**: Three enterotypes (ET-B, ET-L, ET-E) with alpha diversity, LEfSe results, SparCC networks, and species metadata.
+
+### 2. Personalized Metabolic Modeling (COBRA)
+| Step | File | Description |
+|------|------|-------------|
+| Pan-model construction | `create_panmodel_code.txt` | Combine AGORA2 models into genus-level pan-models |
+| Community-level simulation | `initMgPipe_code.txt` | Simulate metabolite secretion under dietary constraints |
+
+> **Dependencies**: MATLAB (R2021b+), COBRA Toolbox, IBM CPLEX
+
+### 3. Machine Learning with SHAP Interpretation
+- **Notebook**: `xgboost_shap_code.ipynb`
+- **Process**:
+  - Data preprocessing & train-test split  
+  - XGBoost with hyperparameter tuning  
+  - Cross-validation with AUC scoring  
+  - SHAP analysis for top bacterial and metabolic predictors
 
 ---
 
-## 🙏 Acknowledgements
+## Mechanistic Diagrams
 
-This study was supported by a grant from the National Research Foundation of Korea (NRF) funded by the Ministry of Science and ICT (RS-2023-00208567)[cite: 307].
+| Diagram | Description |
+|--------|-------------|
+| ![Mechanism](./mechanisms.jpeg) | **Proposed mechanism**: In PD, *E. fergusonii* promotes TMAO and suppresses 5-HTP and butyrate. After intervention with HP + *F. prausnitzii* + *L. plantarum*, these pathways are restored, leading to improved gut-brain axis function. |
+
+---
+
+## Data & Code Access
+
+- Raw sequencing datasets are listed in `Website addresses of each data.xlsx`, with links to public repositories (e.g., NCBI BioProjects).
+- Enterotype-based microbial and functional analyses are in `Enterotype_data/`.
+- All COBRA modeling scripts are under `agora_cobratoolbox_code/`.
+- SHAP model interpretation and visualization in `xgboost_shap_code.ipynb`.
+
+> Additional results and processed outputs will be uploaded to GitHub Releases.
+
+---
+
+## Citation
+
+If you use this repository or find our work helpful, please cite:
+
+> Wu X., Zhang T., Feng J., Park S.* (2025). Synergistic Effects of Herba Patriniae Extract and *F. prausnitzii* + *L. plantarum* on *E. fergusonii*-Driven Gut Dysbiosis in Parkinson’s Disease. *Journal Name*, *Volume*(Issue), Pages. https://doi.org/10.xxxx/xxxx
+
+---
+
+## Acknowledgements
+
+This study was supported by the Biofusion Systems Lab, Hoseo University, and the National Research Foundation of Korea (RS-2023-00208567). Graphical illustrations were created using BioRender.
+
+---
